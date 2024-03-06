@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-
+require("dotenv").config();
 // from nodemailer documentation
 // this is the setup for the pre middleware used in the OTP model
 // we have made this mailSender function so that we can send otp in mail to the user
