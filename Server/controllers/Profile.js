@@ -65,18 +65,18 @@ exports.deleteAccount = async (req, res) => {
 
     // Delete Assosiated Profile with the User , note we used here "new mongoose.Types.ObjectId()" to convert string into object;
     await Profile.findByIdAndDelete({
-      //   _id: new mongoose.Types.ObjectId(user.additionalDetails),
-      _id: userDetails.additionalDetails,
+      _id: new mongoose.Types.ObjectId(user.additionalDetails),
+      // _id: userDetails.additionalDetails,
     });
 
     // TODO: Delete user from all enroller courses
-    // for (const courseId of user.courses) {
-    //   await Course.findByIdAndUpdate(
-    //     courseId,
-    //     { $pull: { studentsEnrolled: id } },
-    //     { new: true }
-    //   );
-    // }
+    for (const courseId of user.courses) {
+      await Course.findByIdAndUpdate(
+        courseId,
+        { $pull: { studentsEnrolled: id } },
+        { new: true }
+      );
+    }
 
     // Now Delete User
     await User.findByIdAndDelete({ _id: id });
