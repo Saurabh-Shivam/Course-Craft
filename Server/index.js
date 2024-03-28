@@ -1,3 +1,18 @@
+// npm i express             to see which of the following command is installed or not go to package.json
+// npm i nodemon             and you can see all command in dependencies;
+// npm i dotenv
+// npm i mongoose
+// npm i cookie-parser
+// npm jsonwebtoken
+// npm i nodemailer
+// npm i opt-generator
+// npm i bcrypt
+// npm install cloudinary
+// npm i razorpay
+// npm i node-schedule
+// npm i express-fileupload
+// npm i cors
+
 const express = require("express");
 const app = express();
 
@@ -22,20 +37,14 @@ database.connect();
 //middlewares
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-  })
-);
-//this middleware is for fileupload in local media
+app.use(cors());
+
 app.use(
   fileUpload({
-    useTempFiles: true,
+    useTempFiles: true, //this middeare is for fileupload in local media;
     tempFileDir: "/tmp",
   })
 );
-
 //cloudinary connection
 cloudinaryConnect();
 
@@ -46,7 +55,7 @@ app.use("/api/v1/course", courseRoutes);
 app.use("/api/v1/payment", paymentRoutes);
 app.use("/api/v1/reach", contactUsRoute);
 
-//default route
+//def route
 app.get("/", (req, res) => {
   return res.json({
     success: true,

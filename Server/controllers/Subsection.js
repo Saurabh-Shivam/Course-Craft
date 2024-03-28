@@ -2,25 +2,20 @@ const Section = require("../models/Section");
 const SubSection = require("../models/SubSection");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 
-require("dotenv").config();
 // Create a new sub-section for a given section
-// handler function to create a subSection
 exports.createSubSection = async (req, res) => {
   try {
-    // Extract necessary information from the request body
-    const { sectionId, title, timeDuration, description } = req.body;
-    // extracting file/video
+    const { sectionId, title, description } = req.body; // Extract necessary information from the request body
     const video = req.files.video;
 
-    // Check if all necessary fields are provided
-    if (!sectionId || !title || !timeDuration || !description || !video) {
-      return res.status(404).json({
-        success: false,
-        message: "All Fields are Required",
-      });
+    if (!sectionId || !title || !description || !video) {
+      // Check if all necessary fields are provided
+      return res
+        .status(404)
+        .json({ success: false, message: "All Fields are Required" });
     }
 
-    // Upload the video file to Cloudinary - will get a secure url from here
+    // Upload the video file to Cloudinary
     const uploadDetails = await uploadImageToCloudinary(
       video,
       process.env.FOLDER_NAME
@@ -39,13 +34,9 @@ exports.createSubSection = async (req, res) => {
       { _id: sectionId },
       { $push: { subSection: SubSectionDetails._id } },
       { new: true }
-    ).populate("subSection"); // here we have used populate to log the updated section with all the data not id
+    ).populate("subSection");
 
-    // return the updated section in the response
-    return res.status(200).json({
-      success: true,
-      data: updatedSection,
-    });
+    return res.status(200).json({ success: true, data: updatedSection }); // Return the updated section in the response
   } catch (error) {
     // Handle any errors that may occur during the process
     return res.status(500).json({
@@ -56,18 +47,15 @@ exports.createSubSection = async (req, res) => {
   }
 };
 
-// handler function to update a subSection
 exports.updateSubSection = async (req, res) => {
   try {
-    const { sectionId, subSectionId, title, timeDuration, description } =
-      req.body;
+    const { sectionId, subSectionId, title, description } = req.body;
     const subSection = await SubSection.findById(subSectionId);
 
     if (!subSection) {
-      return res.status(404).json({
-        success: false,
-        message: "SubSection not found",
-      });
+      return res
+        .status(404)
+        .json({ success: false, message: "SubSection not found" });
     }
 
     if (title !== undefined) {
@@ -76,9 +64,6 @@ exports.updateSubSection = async (req, res) => {
 
     if (description !== undefined) {
       subSection.description = description;
-    }
-    if (timeDuration !== undefined) {
-      subSection.timeDuration = timeDuration;
     }
 
     if (req.files && req.files.video !== undefined) {
@@ -96,7 +81,7 @@ exports.updateSubSection = async (req, res) => {
       "subSection"
     );
 
-    return res.status(200).json({
+    return res.json({
       success: true,
       data: updatedSection,
       message: "Section updated successfully",
@@ -109,7 +94,6 @@ exports.updateSubSection = async (req, res) => {
   }
 };
 
-// handler function to delete a subSection
 exports.deleteSubSection = async (req, res) => {
   try {
     const { subSectionId, sectionId } = req.body;
@@ -132,7 +116,7 @@ exports.deleteSubSection = async (req, res) => {
       "subSection"
     );
 
-    return res.status(200).json({
+    return res.json({
       success: true,
       data: updatedSection,
       message: "SubSection deleted successfully",

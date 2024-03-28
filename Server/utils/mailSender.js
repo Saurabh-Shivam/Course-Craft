@@ -1,11 +1,10 @@
 const nodemailer = require("nodemailer");
-require("dotenv").config();
-// from nodemailer documentation
-// this is the setup for the pre middleware used in the OTP model
-// we have made this mailSender function so that we can send otp in mail to the user
+
 const mailSender = async (email, title, body) => {
+  // with the help of this function we send mail of otp;
   try {
     let transporter = nodemailer.createTransport({
+      // we send mail with the help of transporter and here MAIL_USER , MAIL_PASS contain app password of that email which send email
       host: process.env.MAIL_HOST,
       auth: {
         user: process.env.MAIL_USER,
@@ -14,7 +13,7 @@ const mailSender = async (email, title, body) => {
     });
 
     let info = await transporter.sendMail({
-      from: "Course Craft || Project - by Saurabh",
+      from: "StudyNotion - by Abhikant Singh",
       to: `${email}`,
       subject: `${title}`,
       html: `${body}`,

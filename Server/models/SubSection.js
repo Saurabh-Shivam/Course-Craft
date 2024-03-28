@@ -11,7 +11,7 @@ const subSectionSchema = new mongoose.Schema({
     type: String,
   },
   videoUrl: {
-    type: Number,
+    type: String,
   },
 });
 

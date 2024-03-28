@@ -1,13 +1,14 @@
 const RatingAndReview = require("../models/RatingAndRaview");
 const Course = require("../models/Course");
-const { default: mongoose } = require("mongoose");
+const { mongo, default: mongoose } = require("mongoose");
 
 // controller for creating rating
 const createRating = async (req, res) => {
   try {
-    //get user id
+    // get user id
     const userId = req.user.id;
-    //fetch data from req body
+
+    // fetchdata from req body
     const { rating, review, courseId } = req.body;
 
     //check if user is enrolled or not
@@ -29,13 +30,15 @@ const createRating = async (req, res) => {
       course: courseId,
     });
 
+    //check if user already reviewed the course
     if (alreadyReviewed) {
       return res.status(403).json({
         success: false,
         message: "Course is already reviewed by the user",
       });
     }
-    //create an entry for rating and review in RatingAndReview folder in DB;
+
+    //create an entry for ratingandreview in RatingAndReview folder in DB
     const ratingReview = await RatingAndReview.create({
       rating,
       review,
@@ -51,8 +54,6 @@ const createRating = async (req, res) => {
       },
       { new: true }
     );
-
-    console.log(updatedCourseDetails);
 
     //return response
     return res.status(200).json({
@@ -78,25 +79,24 @@ const getAverageRating = async (req, res) => {
     // calculate average rating
     const result = await RatingAndReview.aggregate([
       {
-        // $match -> it find all entry in which id of courses is matched with courseId in RatingAndReview models;
+        // $match -> it find all entry in which id of courses is matched with courseId in RatingAndReview models
         $match: { course: new mongoose.Types.ObjectId(courseId) },
       },
       {
-        // $group -> all entry grouped into single grouped due to (_id:null) and then find averageRating;
+        // $group -> all entry grouped into single grouped due to (_id:null) and then find averageRating
         $group: { _id: null, averageRating: { $avg: "$rating" } },
       },
     ]);
 
-    //return rating
+    // return rating
     if (result.length > 0) {
       return res.status(200).json({
         success: true,
-        // the aggregate function returns an array of arrays here result
         averageRating: result[0].averageRating,
       });
     }
 
-    //if no rating/Review exist
+    // if no rating/Review exist
     return res.status(200).json({
       success: true,
       message: "Average Rating is 0, no ratings given till now",
@@ -139,3 +139,5 @@ const getAllRating = async (req, res) => {
     });
   }
 };
+
+module.exports = { createRating, getAverageRating, getAllRating };

@@ -1,18 +1,15 @@
 const mongoose = require("mongoose");
 
-const courseSchema = new mongoose.Schema({
-  courseName: {
-    type: String,
-    required: true,
-  },
-  courseDescription: {
-    type: String,
-    required: true,
-  },
+// Define the Courses schema
+const coursesSchema = new mongoose.Schema({
+  courseName: { type: String },
+
+  courseDescription: { type: String },
+
   instructor: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: "User",
+    ref: "user",
   },
   whatYouWillLearn: {
     type: String,
@@ -47,7 +44,7 @@ const courseSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "User",
+      ref: "user",
     },
   ],
   instructions: {
@@ -57,6 +54,16 @@ const courseSchema = new mongoose.Schema({
     type: String,
     enum: ["Draft", "Published"],
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-module.exports = mongoose.model("Course", courseSchema);
+// Export the Courses model
+module.exports = mongoose.model("Course", coursesSchema);
+
+/*
+To set type as an ObjectId (so you may reference something to this), you may do like :- type: mongoose.Schema.Types.ObjectId
+like we do this type in studentsEnrolled So we store many studentsEnrolled_id in this.;
+*/
