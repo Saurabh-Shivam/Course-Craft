@@ -77,7 +77,7 @@ const resetPassword = async (req, res) => {
     }
 
     //token time check
-    if (!(userDetails.resetPasswordExpires > Date.now())) {
+    if (!(userDetails.resetPasswordExpires < Date.now())) {
       return res.json({
         success: false,
         message: "Token is expired, please regenerate your token",
