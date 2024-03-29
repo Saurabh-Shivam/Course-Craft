@@ -3,25 +3,27 @@ const SubSection = require("../models/SubSection");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 
 // Create a new sub-section for a given section
+// handler function to create a subSection
 exports.createSubSection = async (req, res) => {
   try {
-    const { sectionId, title, description } = req.body; // Extract necessary information from the request body
+    // Extract necessary information from the request body
+    const { sectionId, title, description } = req.body;
     const video = req.files.video;
 
+    // Check if all necessary fields are provided
     if (!sectionId || !title || !description || !video) {
-      // Check if all necessary fields are provided
       return res
         .status(404)
         .json({ success: false, message: "All Fields are Required" });
     }
 
-    // Upload the video file to Cloudinary
+    // Upload the video file to Cloudinary - will get a secure url from here
     const uploadDetails = await uploadImageToCloudinary(
       video,
       process.env.FOLDER_NAME
     );
 
-    // Create a new sub-section with the necessary information in DB;
+    // Create a new sub-section with the necessary information in DB
     const SubSectionDetails = await SubSection.create({
       title: title,
       timeDuration: `${uploadDetails.duration}`,
@@ -34,9 +36,13 @@ exports.createSubSection = async (req, res) => {
       { _id: sectionId },
       { $push: { subSection: SubSectionDetails._id } },
       { new: true }
-    ).populate("subSection");
+    ).populate("subSection"); // here we have used populate to log the updated section with all the data not id
 
-    return res.status(200).json({ success: true, data: updatedSection }); // Return the updated section in the response
+    // return the updated section in the response
+    return res.status(200).json({
+      success: true,
+      data: updatedSection,
+    });
   } catch (error) {
     // Handle any errors that may occur during the process
     return res.status(500).json({
@@ -47,6 +53,7 @@ exports.createSubSection = async (req, res) => {
   }
 };
 
+// handler function to update a subSection
 exports.updateSubSection = async (req, res) => {
   try {
     const { sectionId, subSectionId, title, description } = req.body;
@@ -94,6 +101,7 @@ exports.updateSubSection = async (req, res) => {
   }
 };
 
+// handler function to delete a subSection
 exports.deleteSubSection = async (req, res) => {
   try {
     const { subSectionId, sectionId } = req.body;

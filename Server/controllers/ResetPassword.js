@@ -6,36 +6,45 @@ const crypto = require("crypto");
 //resetPasswordToken :- it generate token and send URL with Token to the user;
 const resetPasswordToken = async (req, res) => {
   try {
-    const email = req.body.email; //get email from req body
-    const user = await User.findOne({ email: email }); //check user for this email,find user which email is matched to this email;
+    //get email from req body
+    const email = req.body.email;
+
+    //check user for this email,find user which email is matched to this email
+    const user = await User.findOne({ email: email });
+
+    //if there is no any user for this email;
     if (!user) {
-      //if there is no any user for this email;
       return res.json({
         success: false,
         message: "Your Email is not registered",
       });
     }
 
-    const token = crypto.randomBytes(20).toString("hex"); //generate token and we add expiration time in that token and then we add that token
+    //generate token and we add expiration time in that token and then we add that token
+    const token = crypto.randomBytes(20).toString("hex");
+    // update user by adding token and expiration time
+    // URL so the URL which will be sent to user to reset password will expire after certain time
     const updatedDetails = await User.findOneAndUpdate(
-      // URL so the URL which will be sent to user to reset password will expire after certain time;
       { email: email },
       {
         token: token,
         resetPasswordExpires: Date.now() + 5 * 60 * 60,
       },
       { new: true }
-    ); // {new:true} added because it return updated object so updatedDetails contain updated details;
+    ); // {new:true} added because it return updated object so updatedDetails contain updated details
 
-    const url = `http://localhost:3000/update-password/${token}`; //create url
+    //create url
+    const url = `http://localhost:3000/update-password/${token}`;
+
+    //send mail containing the url
     await mailSender(
       email,
       "Password Reset Link",
       `Your Link for email verification is ${url}. Please click this url to reset your password.`
-    ); //send mail containing the url
+    );
 
+    //return response
     return res.json({
-      //return response
       success: true,
       message: "Email sent successfully, please check email and change pwd",
     });
@@ -48,40 +57,45 @@ const resetPasswordToken = async (req, res) => {
   }
 };
 
-//resetPassword/
+//resetPassword
 const resetPassword = async (req, res) => {
   try {
-    const { password, confirmPassword, token } = req.body; //data fetch
+    // fetch the data
+    const { password, confirmPassword, token } = req.body;
+
+    //validation
     if (password !== confirmPassword) {
-      //validation
       return res.json({ success: false, message: "Password not matching" });
     }
 
-    const userDetails = await User.findOne({ token: token }); //get userdetails from db using token
+    //get userdetails from db using token
+    const userDetails = await User.findOne({ token: token });
+
+    //if no entry - invalid token
     if (!userDetails) {
-      //if no entry - invalid token
       return res.json({ success: false, message: "Token is invalid" });
     }
 
+    //token time check
     if (!(userDetails.resetPasswordExpires > Date.now())) {
-      //token time check
       return res.json({
         success: false,
         message: "Token is expired, please regenerate your token",
       });
     }
 
-    const encryptedPassword = await bcrypt.hash(password, 10); //hash password
+    // hash password and confirm password
+    const encryptedPassword = await bcrypt.hash(password, 10);
 
-    //password update IN DB;
+    // password and confirm password update
     await User.findOneAndUpdate(
       { token: token },
       { password: encryptedPassword },
       { new: true }
     );
 
+    //return response
     return res.status(200).json({
-      //return response
       success: true,
       message: "Password reset successful",
     });
