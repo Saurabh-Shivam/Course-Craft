@@ -55,14 +55,19 @@ exports.updateProfile = async (req, res) => {
   }
 };
 
+// handler function to delete user account
 exports.deleteAccount = async (req, res) => {
   try {
+    // fetch id
     const id = req.user.id;
+
+    // validation
     const user = await User.findById({ _id: id });
     if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found" });
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
     }
 
     // Delete Assosiated Profile with the User , note we used here "new mongoose.Types.ObjectId()" to convert string into object;

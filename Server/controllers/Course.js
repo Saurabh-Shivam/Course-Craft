@@ -213,6 +213,7 @@ exports.getAllCourses = async (req, res) => {
   }
 };
 
+// controller for getting a course details
 exports.getCourseDetails = async (req, res) => {
   try {
     // get id
@@ -232,7 +233,7 @@ exports.getCourseDetails = async (req, res) => {
         path: "courseContent",
         populate: {
           path: "subSection",
-          select: "-videoUrl",
+          // select: "-videoUrl",
         },
       })
       .exec();

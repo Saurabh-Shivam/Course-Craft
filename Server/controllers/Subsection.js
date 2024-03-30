@@ -2,19 +2,20 @@ const Section = require("../models/Section");
 const SubSection = require("../models/SubSection");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 
-// Create a new sub-section for a given section
-// handler function to create a subSection
+// handler function to create a subSection for a given section
 exports.createSubSection = async (req, res) => {
   try {
-    // Extract necessary information from the request body
+    // Extracting necessary information from the request body
     const { sectionId, title, description } = req.body;
+    // extracting file/video
     const video = req.files.video;
 
     // Check if all necessary fields are provided
     if (!sectionId || !title || !description || !video) {
-      return res
-        .status(404)
-        .json({ success: false, message: "All Fields are Required" });
+      return res.status(404).json({
+        success: false,
+        message: "All Fields are Required",
+      });
     }
 
     // Upload the video file to Cloudinary - will get a secure url from here
@@ -56,13 +57,15 @@ exports.createSubSection = async (req, res) => {
 // handler function to update a subSection
 exports.updateSubSection = async (req, res) => {
   try {
+    // TODO: Problem in understanding this code
     const { sectionId, subSectionId, title, description } = req.body;
-    const subSection = await SubSection.findById(subSectionId);
+    const subSection = await SubSection.findById(sectionId);
 
     if (!subSection) {
-      return res
-        .status(404)
-        .json({ success: false, message: "SubSection not found" });
+      return res.status(404).json({
+        success: false,
+        message: "SubSection not found",
+      });
     }
 
     if (title !== undefined) {
@@ -91,12 +94,12 @@ exports.updateSubSection = async (req, res) => {
     return res.json({
       success: true,
       data: updatedSection,
-      message: "Section updated successfully",
+      message: "SubSection updated successfully",
     });
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "An error occurred while updating the section",
+      message: "An error occurred while updating the SubSection",
     });
   }
 };
