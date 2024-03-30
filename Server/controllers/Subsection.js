@@ -57,9 +57,8 @@ exports.createSubSection = async (req, res) => {
 // handler function to update a subSection
 exports.updateSubSection = async (req, res) => {
   try {
-    // TODO: Problem in understanding this code
     const { sectionId, subSectionId, title, description } = req.body;
-    const subSection = await SubSection.findById(sectionId);
+    const subSection = await SubSection.findById(subSectionId);
 
     if (!subSection) {
       return res.status(404).json({
