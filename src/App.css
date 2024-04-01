@@ -7,7 +7,7 @@ body {
   overflow-x: hidden;
 }
 
-/* for adding background gradient to the homepage code block sections */
+/* for adding background gradient to the homepage section 1 code block parts */
 .codeblock1 {
   width: 372.95px;
   height: 257.05px;
@@ -40,4 +40,9 @@ body {
   opacity: 0.2;
   filter: blur(34px);
   transform: matrix(1, 0, -0.03, 1, 0, 0);
+}
+
+/* for adding background image to the homepage section 2 */
+.homepage_bg {
+  background: url("../src/assets/Images/bghome.svg");
 }

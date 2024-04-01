@@ -6,6 +6,8 @@ import CTAButton from "../components/core/HomePage/CTAButton";
 import Banner from "../assets/Images/banner.mp4";
 import CodeBlocks from "../components/core/HomePage/CodeBlocks";
 import Footer from "../components/common/Footer";
+import TimelineSection from "../components/core/HomePage/TimelineSection";
+import LearningLanguageSection from "../components/core/HomePage/LearningLanguageSection";
 
 const Home = () => {
   return (
@@ -116,6 +118,49 @@ const Home = () => {
       </div>
 
       {/* Section 2 */}
+      <div className="bg-pure-greys-5 text-richblack-700">
+        {/* Start Part of section 2 with white background */}
+        <div className="homepage_bg h-[333px]">
+          <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8">
+            <div className="lg:h-[150px]"></div>
+            {/* Two Buttons */}
+            <div className="flex flex-row gap-7 text-white lg:mt-8">
+              <CTAButton active={true} linkto={"/signup"}>
+                <div className="flex items-center gap-2">
+                  Explore Full Catalog <FaArrowRight />
+                </div>
+              </CTAButton>
+              <CTAButton active={false} linkto={"/signup"}>
+                <div> Learn more</div>
+              </CTAButton>
+            </div>
+          </div>
+        </div>
+        {/* Second Part of section 2 with white background */}
+        <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8">
+          <div className="mb-10 mt-[-100px] flex flex-col justify-between gap-7 lg:mt-20 lg:flex-row lg:gap-0">
+            <div className="text-4xl font-semibold lg:w-[45%] ">
+              Get the Skills you need for a
+              <HighlightText text={"Job that is in demand"} />
+            </div>
+
+            <div className="flex flex-col items-start gap-10 lg:w-[40%]">
+              <p className="text-[16px]">
+                The modern StudyNotion is the dictates its own terms. Today, to
+                be a competitive specialist requires more than professional
+                skills.
+              </p>
+              <CTAButton active={true} linkto={"/signup"}>
+                Learn more
+              </CTAButton>
+            </div>
+          </div>
+
+          <TimelineSection />
+          <LearningLanguageSection />
+        </div>
+      </div>
+
       {/* Section 3 */}
       {/* Section 4 */}
       {/* <Footer /> */}
