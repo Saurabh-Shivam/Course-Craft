@@ -8,11 +8,14 @@ import CodeBlocks from "../components/core/HomePage/CodeBlocks";
 import Footer from "../components/common/Footer";
 import TimelineSection from "../components/core/HomePage/TimelineSection";
 import LearningLanguageSection from "../components/core/HomePage/LearningLanguageSection";
+import InstructorSection from "../components/core/HomePage/InstructorSection";
+import ReviewSlider from "../components/common/ReviewSlider";
+import ExploreMore from "../components/core/HomePage/ExploreMore";
 
 const Home = () => {
   return (
     <div>
-      {/* Section 1 */}
+      {/* Section 1 -> black background */}
       <div className="relative mx-auto flex flex-col w-11/12 max-w-maxContent items-center text-white justify-between">
         {/* Top Button */}
         <Link to={"/signup"}>
@@ -115,11 +118,14 @@ const Home = () => {
             backgroundGradient={<div className="codeblock2 absolute"></div>}
           />
         </div>
+
+        {/* Explore more */}
+        <ExploreMore />
       </div>
 
-      {/* Section 2 */}
+      {/* Section 2 -> white background */}
       <div className="bg-pure-greys-5 text-richblack-700">
-        {/* Start Part of section 2 with white background */}
+        {/* Start Part of section 2 with grid lines image background */}
         <div className="homepage_bg h-[333px]">
           <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8">
             <div className="lg:h-[150px]"></div>
@@ -136,7 +142,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        {/* Second Part of section 2 with white background */}
+        {/* Second main Part of section 2 with white background */}
         <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8">
           <div className="mb-10 mt-[-100px] flex flex-col justify-between gap-7 lg:mt-20 lg:flex-row lg:gap-0">
             <div className="text-4xl font-semibold lg:w-[45%] ">
@@ -161,9 +167,15 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Section 3 */}
-      {/* Section 4 */}
-      {/* <Footer /> */}
+      {/* Section 3 -> black background */}
+      <div className="relative mx-auto my-20 flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 bg-richblack-900 text-white">
+        <InstructorSection />
+        <h1 className="text-center text-4xl font-semibold mt-8">
+          Reviews from other learners
+        </h1>
+        <ReviewSlider />
+      </div>
+      <Footer />
     </div>
   );
 };
