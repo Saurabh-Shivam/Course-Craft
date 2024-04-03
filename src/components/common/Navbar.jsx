@@ -10,6 +10,7 @@ import ProfileDropdown from "../core/Auth/ProfileDropDown";
 import { apiConnector } from "../../services/apiconnector";
 import { categories } from "../../services/apis";
 
+// For testing
 // const subLinks = [
 //   {
 //     title: "python",
