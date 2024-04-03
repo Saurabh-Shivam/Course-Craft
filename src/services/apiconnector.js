@@ -1,0 +1,15 @@
+import axios from "axios";
+
+export const axiosInstance = axios.create({});
+
+// this apiConnector is used to connect (backend API to fronted);
+
+export const apiConnector = (method, url, bodyData, headers, params) => {
+  return axiosInstance({
+    method: `${method}`,
+    url: `${url}`,
+    data: bodyData ? bodyData : null,
+    headers: headers ? headers : null,
+    params: params ? params : null,
+  });
+};
