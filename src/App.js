@@ -17,6 +17,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Dashboard from "./pages/Dashboard";
 import Error from "./pages/Error";
+import Settings from "./components/core/Dashboard/Settings/Settings";
 
 function App() {
   return (
@@ -81,6 +82,7 @@ function App() {
           }
         >
           <Route path="dashboard/my-profile" element={<MyProfile />} />
+          <Route path="dashboard/settings" element={<Settings />} />
         </Route>
 
         <Route path="*" element={<Error />} />
