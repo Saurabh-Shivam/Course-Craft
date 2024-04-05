@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import logo from "../../assets/Logo/Logo-Full-Light.png";
+// import logo from "../../assets/Logo/Logo-Full-Light.png";
+import logo from "../../assets/Logo/CourseCraftLogo.png";
 import { Link, matchPath, useLocation } from "react-router-dom";
 import { NavbarLinks } from "../../data/navbar-links";
 import { useSelector } from "react-redux";
@@ -62,7 +63,8 @@ const Navbar = () => {
         {/* Logo */}
         <Link to="/">
           {/* TODO: Need to change the logo of project */}
-          <img src={logo} alt="Logo" width={160} height={32} loading="lazy" />
+          {/* <img src={logo} alt="Logo" width={160} height={32} loading="lazy" /> */}
+          <img src={logo} alt="Logo" width={180} height={32} loading="lazy" />
         </Link>
 
         {/* Nav Links */}

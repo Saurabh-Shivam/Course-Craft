@@ -4,6 +4,8 @@ import { Route, Routes } from "react-router-dom";
 // Components
 import Navbar from "./components/common/Navbar";
 import OpenRoute from "./components/core/Auth/OpenRoute";
+import MyProfile from "./components/core/Dashboard/MyProfile";
+import PrivateRoute from "./components/core/Auth/PrivateRoute";
 // Pages
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -13,6 +15,8 @@ import VerifyEmail from "./pages/VerifyEmail";
 import UpdatePassword from "./pages/UpdatePassword";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Dashboard from "./pages/Dashboard";
+import Error from "./pages/Error";
 
 function App() {
   return (
@@ -68,14 +72,18 @@ function App() {
             </OpenRoute>
           }
         />
+        <Route path="contact" element={<Contact />} />
         <Route
-          path="contact"
           element={
-            <OpenRoute>
-              <Contact />
-            </OpenRoute>
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
           }
-        />
+        >
+          <Route path="dashboard/my-profile" element={<MyProfile />} />
+        </Route>
+
+        <Route path="*" element={<Error />} />
       </Routes>
     </div>
   );
