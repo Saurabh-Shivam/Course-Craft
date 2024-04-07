@@ -191,6 +191,7 @@ function CourseDetails() {
             <p className="text-3xl font-semibold">What you'll learn</p>
             <div className="mt-5">
               {/* <ReactMarkdown>{whatYouWillLearn}</ReactMarkdown> */}
+              {whatYouWillLearn}
             </div>
           </div>
 
