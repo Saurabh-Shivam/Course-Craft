@@ -26,6 +26,7 @@ exports.capturePayment = async (req, res) => {
       message: "Please provide Course Id",
     });
   }
+
   let totalAmount = 0;
 
   for (const course_id of courses) {
@@ -43,9 +44,10 @@ exports.capturePayment = async (req, res) => {
       // converting the user present in string type to object type
       const uid = new mongoose.Types.ObjectId(userId);
       if (course.studentsEnrolled.includes(uid)) {
-        return res
-          .status(200)
-          .json({ success: false, message: "Student is already Enrolled" });
+        return res.status(200).json({
+          success: false,
+          message: "Student is already Enrolled",
+        });
       }
 
       totalAmount += course.price;
@@ -75,9 +77,10 @@ exports.capturePayment = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res
-      .status(500)
-      .json({ success: false, mesage: "Could not Initiate Order" });
+    return res.status(500).json({
+      success: false,
+      mesage: "Could not Initiate Order",
+    });
   }
 };
 
@@ -96,20 +99,32 @@ exports.verifyPayment = async (req, res) => {
     !courses ||
     !userId
   ) {
-    return res.status(200).json({ success: false, message: "Payment Failed" });
+    return res.status(200).json({
+      success: false,
+      message: "Payment Failed",
+    });
   }
 
+  // taken reference from razorpay documentation
   let body = razorpay_order_id + "|" + razorpay_payment_id;
   const expectedSignature = crypto
     .createHmac("sha256", process.env.RAZORPAY_SECRET)
     .update(body.toString())
     .digest("hex");
 
+  // enroll the student
   if (expectedSignature === razorpay_signature) {
-    await enrollStudents(courses, userId, res); //enroll karwao student ko
-    return res.status(200).json({ success: true, message: "Payment Verified" }); //return res
+    await enrollStudents(courses, userId, res);
+    //return res
+    return res.status(200).json({
+      success: true,
+      message: "Payment Verified",
+    });
   }
-  return res.status(200).json({ success: "false", message: "Payment Failed" });
+  return res.status(200).json({
+    success: "false",
+    message: "Payment Failed",
+  });
 };
 
 const enrollStudents = async (courses, userId, res) => {
@@ -130,9 +145,10 @@ const enrollStudents = async (courses, userId, res) => {
       );
 
       if (!enrolledCourse) {
-        return res
-          .status(500)
-          .json({ success: false, message: "Course not Found" });
+        return res.status(500).json({
+          success: false,
+          message: "Course not Found",
+        });
       }
       // created courseProgress for enrolled Courses in DB;
       const courseProgress = await CourseProgress.create({
@@ -159,7 +175,10 @@ const enrollStudents = async (courses, userId, res) => {
       );
     } catch (error) {
       console.log(error);
-      return res.status(500).json({ success: false, message: error.message });
+      return res.status(500).json({
+        success: false,
+        message: error.message,
+      });
     }
   }
 };
