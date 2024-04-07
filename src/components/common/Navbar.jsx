@@ -91,7 +91,9 @@ const Navbar = () => {
                           ) : subLinks?.length ? ( */}
                           {subLinks?.length ? (
                             <>
-                              {subLinks.map((subLink, i) => (
+                              {/* TODO: Add filter method here */}
+                              {
+                                subLinks.map((subLink, i) => (
                                 /* <Link
                                   to={`${subLink.link}`}
                                   className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50"
@@ -109,7 +111,8 @@ const Navbar = () => {
                                 >
                                   <p>{subLink.name}</p>
                                 </Link>
-                              ))}
+                              ))
+                              }
                             </>
                           ) : (
                             <p className="text-center">No Courses Found</p>
