@@ -26,6 +26,7 @@ import Contact from "./pages/Contact";
 import Dashboard from "./pages/Dashboard";
 import Error from "./pages/Error";
 import EditCourse from "./components/core/Dashboard/EditCourse/EditCourse";
+import Catalog from "./pages/Catalog";
 
 function App() {
   const { user } = useSelector((state) => state.profile);
@@ -35,6 +36,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/catalog/:catalogName" element={<Catalog />} />
         <Route
           path="signup"
           element={
