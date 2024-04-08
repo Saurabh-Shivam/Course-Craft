@@ -35,17 +35,17 @@ import CourseDetails from "./pages/CourseDetails";
 import ViewCourse from "./pages/ViewCourse";
 
 function App() {
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user } = useSelector((state) => state.profile);
 
-  // useEffect(() => {
-  //   // it store data of user in localstroage and when we open browser then that user logined;
-  //   if (localStorage.getItem("token")) {
-  //     const token = JSON.parse(localStorage.getItem("token"));
-  //     dispatch(getUserDetails(token, navigate));
-  //   }
-  // }, []);
+  useEffect(() => {
+    // it store data of user in localstroage and when we open browser then that user logined;
+    if (localStorage.getItem("token")) {
+      const token = JSON.parse(localStorage.getItem("token"));
+      dispatch(getUserDetails(token, navigate));
+    }
+  }, []);
 
   return (
     <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
@@ -129,7 +129,7 @@ function App() {
           )}
         </Route>
 
-        {/* For watchinγvideo leactures of course */}
+        {/* For watchingγvideo leactures of course */}
         <Route
           element={
             <PrivateRoute>
