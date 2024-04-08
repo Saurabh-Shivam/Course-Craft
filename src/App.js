@@ -1,7 +1,8 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
-import { ACCOUNT_TYPE } from "./utils/constants";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
+// import { ACCOUNT_TYPE } from "./utils/constants";
+import { useDispatch, useSelector } from "react-redux";
 
 // Components
 import Navbar from "./components/common/Navbar";
@@ -13,6 +14,7 @@ import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses";
 import Cart from "./components/core/Dashboard/Cart/Cart";
 import MyCourses from "./components/core/Dashboard/MyCourses";
 import AddCourse from "./components/core/Dashboard/AddCourse/AddCourse";
+import VideoDetails from "./components/core/ViewCourse/VideoDetails";
 
 // Pages
 import Home from "./pages/Home";
@@ -28,9 +30,22 @@ import Error from "./pages/Error";
 import EditCourse from "./components/core/Dashboard/EditCourse/EditCourse";
 import Catalog from "./pages/Catalog";
 import CourseDetails from "./pages/CourseDetails";
+import ViewCourse from "./pages/ViewCourse";
+import { getUserDetails } from "./services/operations/profileAPI";
+import { ACCOUNT_TYPE } from "./utils/constants";
 
 function App() {
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
   const { user } = useSelector((state) => state.profile);
+
+  // useEffect(() => {
+  //   // it store data of user in localstroage and when we open browser then that user logined;
+  //   if (localStorage.getItem("token")) {
+  //     const token = JSON.parse(localStorage.getItem("token"));
+  //     dispatch(getUserDetails(token, navigate));
+  //   }
+  // }, []);
 
   return (
     <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
@@ -108,6 +123,24 @@ function App() {
               <Route
                 path="dashboard/edit-course/:courseId"
                 element={<EditCourse />}
+              />
+            </>
+          )}
+        </Route>
+
+        {/* For watchinγvideo leactures of course */}
+        <Route
+          element={
+            <PrivateRoute>
+              <ViewCourse />
+            </PrivateRoute>
+          }
+        >
+          {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+            <>
+              <Route
+                path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
+                element={<VideoDetails />}
               />
             </>
           )}

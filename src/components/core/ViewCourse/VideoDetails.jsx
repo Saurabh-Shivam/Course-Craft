@@ -202,7 +202,6 @@ const VideoDetails = () => {
                     onClick={goToPrevVideo}
                     className="blackButton"
                   >
-                    
                     Prev
                   </button>
                 )}
@@ -212,7 +211,6 @@ const VideoDetails = () => {
                     onClick={goToNextVideo}
                     className="blackButton"
                   >
-                    
                     Next
                   </button>
                 )}

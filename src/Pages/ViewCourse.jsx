@@ -43,8 +43,8 @@ export default function ViewCourse() {
           </div>
         </div>
       </div>
-      {reviewModal && <CourseReviewModal setReviewModal={setReviewModal} />}{" "}
       {/* when we open reviewModal or click on review then CourseReviewModal will be active */}
+      {reviewModal && <CourseReviewModal setReviewModal={setReviewModal} />}
     </>
   );
 }

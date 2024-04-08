@@ -17,7 +17,7 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
     totalNoOfLectures,
     completedLectures,
   } = useSelector((state) => state.viewCourse);
-
+ 
   useEffect(() => {
     (() => {
       if (!courseSectionData.length) return;
@@ -44,6 +44,7 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
         </div>
       ) : (
         <div className="flex h-[calc(100vh-3.5rem)] w-[320px] max-w-[350px] flex-col border-r-[1px] border-r-richblack-700 bg-richblack-800">
+          {/* for buttons and headings */}
           <div className="mx-5 flex flex-col items-start justify-between gap-2 gap-y-4 border-b border-richblack-600 py-5 text-lg font-bold text-richblack-25">
             <div className="flex w-full items-center justify-between ">
               <div
@@ -65,12 +66,12 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
             <div className="flex flex-col">
               <p>{courseEntireData?.courseName}</p>
               <p className="text-sm font-semibold text-richblack-500">
-                
                 {completedLectures?.length} / {totalNoOfLectures}
               </p>
             </div>
           </div>
 
+          {/* for sections and subsections */}
           <div className="h-[calc(100vh - 5rem)] overflow-y-auto">
             {courseSectionData.map((course, index) => (
               <div

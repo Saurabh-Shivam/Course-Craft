@@ -47,7 +47,6 @@ export default function CourseReviewModal({ setReviewModal }) {
         <div className="flex items-center justify-between rounded-t-lg bg-richblack-700 p-5">
           <p className="text-xl font-semibold text-richblack-5"> Add Review </p>
           <button onClick={() => setReviewModal(false)}>
-            
             <RxCross2 className="text-2xl text-richblack-5" />
           </button>
         </div>
@@ -62,7 +61,6 @@ export default function CourseReviewModal({ setReviewModal }) {
             />
             <div className="">
               <p className="font-semibold text-richblack-5">
-                
                 {user?.firstName} {user?.lastName}
               </p>
               <p className="text-sm text-richblack-5"> Posting Publicly </p>
@@ -97,12 +95,12 @@ export default function CourseReviewModal({ setReviewModal }) {
 
               {errors.courseExperience && (
                 <span className="ml-2 text-xs tracking-wide text-pink-200">
-                  
                   Please Add Your Experience
                 </span>
               )}
             </div>
 
+            {/* Cancel and save button */}
             <div className="mt-6 flex w-11/12 justify-end gap-x-2">
               <button
                 onClick={() => setReviewModal(false)}
